@@ -299,6 +299,15 @@ Item{
                 // }
 
                 PC3.ToolButton {
+                    icon.name: "system-suspend-symbolic"
+                    onClicked: sm.suspend()
+                    ToolTip.delay: 200
+                    ToolTip.timeout: 1000
+                    ToolTip.visible: hovered
+                    ToolTip.text: i18n("Sleep")
+                }
+
+                PC3.ToolButton {
                     icon.name:  "system-lock-screen-symbolic"
                     onClicked: sm.lock()
                     ToolTip.delay: 200
