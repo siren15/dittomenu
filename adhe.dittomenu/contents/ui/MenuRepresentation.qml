@@ -299,7 +299,7 @@ Item{
                 // }
 
                 PC3.ToolButton {
-                    icon.name: "system-suspend-symbolic"
+                    icon.name: "weather-clear-night-symbolic"
                     onClicked: sm.suspend()
                     ToolTip.delay: 200
                     ToolTip.timeout: 1000
