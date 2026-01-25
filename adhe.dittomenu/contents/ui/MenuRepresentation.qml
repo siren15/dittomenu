@@ -34,7 +34,7 @@ import org.kde.plasma.private.shell 2.0
 import org.kde.kwindowsystem 1.0
 //import QtGraphicalEffects 1.0
 import org.kde.kquickcontrolsaddons 2.0
-import org.kde.plasma.private.quicklaunch 1.0
+//import org.kde.plasma.private.quicklaunch 1.0
 import QtQuick.Controls 2.12
 import org.kde.kirigami as Kirigami
 import org.kde.ksvg 1.0 as KSvg
@@ -203,7 +203,7 @@ Item{
 
 
             KCoreAddons.KUser {   id: kuser  }
-            Logic { id: logic }
+            // Logic { id: logic }
 
 
             OpacityAnimator { id: animation1; target: rootItem; from: 0; to: 1; easing.type: Easing.InOutQuad;  }
@@ -275,14 +275,14 @@ Item{
                     topMargin: Kirigami.Units.largeSpacing
                 }
 
-                PC3.ToolButton {
+                /* PC3.ToolButton {
                     icon.name:  "org.gnome.Settings-system-symbolic"
-                    onClicked: logic.openUrl("file:///usr/share/applications/systemsettings.desktop")
+                    onClicked: main.launchDesktopEntry("file:///usr/share/applications/systemsettings.desktop")
                     ToolTip.delay: 200
                     ToolTip.timeout: 1000
                     ToolTip.visible: hovered
                     ToolTip.text: i18n("System Preferences")
-                }
+                } */
 
                 Item{
                     Layout.fillWidth: true
