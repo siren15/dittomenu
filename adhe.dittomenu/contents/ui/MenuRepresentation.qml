@@ -71,8 +71,11 @@ Item{
             // Build the full command to execute the launcher script with the command as argument
             var fullCmd = launcherScript.replace("file://", "") + " " + cmd;
 
-            // Use the executable DataSource to run the command
-            executable.connectedSources = [fullCmd];
+            // Add a unique identifier (timestamp) to force the datasource to treat it as a new source
+            var uniqueCmd = fullCmd + " #" + Date.now();
+
+            // Set the connectedSources with the unique command
+            executable.connectedSources = [uniqueCmd];
 
             console.debug("Executing command via launcher script:", fullCmd);
         } catch (error) {
