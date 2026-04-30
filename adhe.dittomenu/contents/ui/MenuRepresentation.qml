@@ -46,6 +46,7 @@ import Qt5Compat.GraphicalEffects
 import org.kde.plasma.private.sessions as Sessions
 
 
+
 Item{
     id: main
     property int sizeImage: Kirigami.Units.iconSizes.large * 2.5
@@ -59,6 +60,23 @@ Item{
 
         PlasmaExtras.MenuItem {
             action: Plasmoid.internalAction("configure")
+        }
+    }
+
+    function launchDesktopFile(cmd) {
+        try {
+            // Get the absolute path to the launcher script
+            var launcherScript = Qt.resolvedUrl("./code/launch-desktop.sh").toString();
+
+            // Build the full command to execute the launcher script with the command as argument
+            var fullCmd = launcherScript.replace("file://", "") + " " + cmd;
+
+            // Use the executable DataSource to run the command
+            executable.connectedSources = [fullCmd];
+
+            console.debug("Executing command via launcher script:", fullCmd);
+        } catch (error) {
+            console.error("Error executing shell command:", error);
         }
     }
 
@@ -230,22 +248,12 @@ Item{
             P5Support.DataSource {
                 id: executable
                 engine: "executable"
-                connectedSources: []
-                onNewData: {
-                    var exitCode = data["exit code"]
-                    var exitStatus = data["exit status"]
-                    var stdout = data["stdout"]
-                    var stderr = data["stderr"]
-                    exited(sourceName, exitCode, exitStatus, stdout, stderr)
-                    disconnectSource(sourceName)
+                onNewData: function(sourceName) {
+                    // Handle command execution output if needed
+                    console.debug("Command executed:", sourceName);
                 }
-                function exec(cmd) {
-                    if (cmd) {
-                        connectSource(cmd)
-                    }
-                }
-                signal exited(string cmd, int exitCode, int exitStatus, string stdout, string stderr)
             }
+
 
             PlasmaExtras.Highlight  {
                 id: delegateHighlight
@@ -275,14 +283,14 @@ Item{
                     topMargin: Kirigami.Units.largeSpacing
                 }
 
-                /* PC3.ToolButton {
+                PC3.ToolButton {
                     icon.name:  "org.gnome.Settings-system-symbolic"
-                    onClicked: main.launchDesktopEntry("file:///usr/share/applications/systemsettings.desktop")
+                    onClicked: main.launchDesktopFile("/usr/share/applications/systemsettings.desktop")
                     ToolTip.delay: 200
                     ToolTip.timeout: 1000
                     ToolTip.visible: hovered
                     ToolTip.text: i18n("System Preferences")
-                } */
+                }
 
                 Item{
                     Layout.fillWidth: true
